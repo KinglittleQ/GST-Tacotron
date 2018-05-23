@@ -29,18 +29,18 @@ pip3 install -r requirements.txt
 
 ```
 --- log
-| 	 |
-|	 --- log[log_number]
+|    |
+|    --- log[log_number]
 |
 --- code
      |
      --- Tacotron
-     		|
-     		--- train.py
-     		|
-     		--- Network.py
-     		|
-     		...
+             |
+             --- train.py
+             |
+             --- Network.py
+             |
+           ......
 ```
 
 - run train.py
