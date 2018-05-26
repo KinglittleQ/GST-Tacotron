@@ -103,8 +103,9 @@ def train(log_dir, dataset_size, start_epoch=0):
 
             mels_input = mels[:, :-1, :]  # shift
             mels_input = mels_input[:, :, -hp.n_mels:]  # get last frame
+            ref_mels = mels[:, 1:, :]
 
-            mels_hat, mags_hat, _ = model(texts, mels_input)
+            mels_hat, mags_hat, _ = model(texts, mels_input, ref_mels)
 
             mel_loss, mag_loss = criterion(mels[:, 1:, :], mels_hat, mags, mags_hat)
             loss = mel_loss + mag_loss
@@ -142,11 +143,12 @@ def train(log_dir, dataset_size, start_epoch=0):
 
             model.eval()
 
-            text, mel = get_eval_data(hp.eval_text)
+            text, mel, ref_mels = get_eval_data(hp.eval_text, hp.ref_wav)
             text = text.to(device)
             mel = mel.to(device)
+            ref_mels = ref_mels.to(device)
 
-            mel_hat, mag_hat, attn = model(text, mel)
+            mel_hat, mag_hat, attn = model(text, mel, ref_mels)
 
             mag_hat = mag_hat.squeeze().detach().cpu().numpy()
             attn = attn.squeeze().detach().cpu().numpy()

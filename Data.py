@@ -19,7 +19,7 @@ class SpeechDataset(Dataset):
     def __init__(self, r=slice(0, None)):
         print('Start loading data')
         # fpaths, texts = get_data(hp.data, r)  # thchs30
-        fpaths, texts = get_aishell_data(hp.data, r)  # keda api
+        fpaths, texts = get_keda_data(hp.data, r)  # keda api
         print('Finish loading data')
         self.fpaths = fpaths
         self.texts = texts
@@ -86,6 +86,29 @@ def pad_sequence(sequences):
     return out
 
 
+def get_keda_data(dataset_dir, r):
+    wav_paths = []
+    texts = []
+
+    wav_dirs = ['nannan', 'xiaofeng', 'donaldduck']
+    csv_paths = ['transcript-nannan.csv', 'transcript-xiaofeng.csv', 'transcript-donaldduck.csv']
+    for wav_dir, csv_path in zip(wav_dirs, csv_paths):
+        csv = open(os.path.join(dataset_dir, csv_path), 'r')
+        for line in csv.readlines():
+            items = line.strip().split('|')
+            wav_paths.append(os.path.join(dataset_dir, wav_dir, items[0] + '.wav'))
+            text = text_normalize(items[1]) + 'E'
+            text = [hp.char2idx[c] for c in text]
+            text = torch.Tensor(text).type(torch.LongTensor)
+            texts.append(text)
+        csv.close()
+
+    for wav in wav_paths[-20:]:
+        print(wav)
+
+    return wav_paths[r], texts[r]
+
+
 def get_thchs30_data(dataset_dir, r):
     wav_paths = []
     text_paths = []
@@ -149,7 +172,28 @@ def get_aishell_data(data_dir, r):
     return wav_paths[r], texts[r]
 
 
-def get_eval_data(text):
+def get_LJ_data(data_dir, r):
+    path = os.path.join(data_dir, 'transcript.csv')
+    data_dir = os.path.join(data_dir, 'wavs')
+    wav_paths = []
+    texts = []
+    with open(path, 'r') as f:
+        for line in f.readlines():
+            items = line.strip().split('|')
+            wav_paths.append(os.path.join(data_dir, items[0] + '.wav'))
+            text = items[1]
+            text = text_normalize(text) + 'E'
+            text = [hp.char2idx[c] for c in text]
+            text = torch.Tensor(text).type(torch.LongTensor)
+            texts.append(text)
+
+    for wav in wav_paths[-20:]:
+        print(wav)
+
+    return wav_paths[r], texts[r]
+
+
+def get_eval_data(text, wav_path):
     '''
     get data for eval
     --------------
@@ -165,7 +209,10 @@ def get_eval_data(text):
     text = text.unsqueeze(0)  # [1, T_x]
     mel = torch.zeros(1, 1, hp.n_mels)  # GO frame [1, 1, n_mels]
 
-    return text, mel
+    _, ref_mels, _ = load_spectrograms(wav_path)
+    ref_mels = torch.from_numpy(ref_mels).unsqueeze(0)
+
+    return text, mel, ref_mels
 
 
 if __name__ == '__main__':

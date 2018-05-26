@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from Modules import *
+from GST import GST
 from Hyperparameters import Hyperparameters as hp
 
 
@@ -21,9 +22,16 @@ class Tacotron(nn.Module):
         self.encoder = Encoder()
         self.decoder = Decoder()
 
-    def forward(self, texts, mels):
+        self.gst = GST()
+
+    def forward(self, texts, mels, ref_mels):
         embedded = self.embedding(texts)  # [N, T_x, E]
         memory, encoder_hidden = self.encoder(embedded)  # [N, T_x, E]
+
+        style_embed = self.gst(ref_mels)  # [N, 256]
+        style_embed = style_embed.expand_as(memory)
+        memory = memory + style_embed
+
         mels_hat, mags_hat, attn_weights = self.decoder(mels, memory)
 
         return mels_hat, mags_hat, attn_weights
