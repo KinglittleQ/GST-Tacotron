@@ -1,7 +1,5 @@
 # Tacotron-Pytorch
-A PyTorch implementation of Tacotron.
-
-Paper: [Tacotron: A Fully End-to-End Text-To-Speech Synthesis Model](https://arxiv.org/abs/1703.10135)
+A  PyTorch implementation of  [Style Tokens: Unsupervised Style Modeling, Control and Transfer in End-to-End Speech Synthesis](https://arxiv.org/abs/1803.09017)
 
 ![model](pic/model.png)
 
@@ -16,6 +14,7 @@ pip3 install -r requirements.txt
 - `Hyperparameters.py` --- contain all hyperparameters
 - `Network.py` --- encoder\decoder
 - `Modules.py` --- some modules for tacotron
+- `GST.py` --- reference encoder and style embedding layer with multihead attention
 - `Loss.py` --- calculate loss
 - `Data.py` --- load dataset
 - `utils.py` --- some util function for loading and saving data
@@ -23,8 +22,9 @@ pip3 install -r requirements.txt
 
 ## How to train
 
-- Download dataset --- LJSpeech or thchs30
-- Adjust hyperparameters  in Hyperparameters.py
+- Download multispeaker dataset
+- preprocess your data and write yout `get_XX_data` function in `Data.py`
+- Adjust hyperparameters  in `Hyperparameters.py`
 - make a directory named `log` in the parent of parent directory of Tacotron code
 
 ```
@@ -43,7 +43,8 @@ pip3 install -r requirements.txt
            ......
 ```
 
-- run train.py
+- prepare a reference wav file and don't forget to change the refrence wav path in `Hyperparameters.py` 
+- run `train.py`
 
 ``` shell
 python3 train.py [log_number] [dataset_size] [start_epoch]
@@ -56,14 +57,12 @@ for example:
 python3 train.py 0 all 0
 ```
 
-## How to generate wav
+## How to generate wav(TO DO)
 
 run `Synthesis.py`
 
-``` shell
-python3 Synthesis.py [log_number] [epoch]
+## Reference
 
-[log_number]: the log directory number
-[epoch]: model of which epoch to load
-```
+- Kyubyong/[**tacotron**](https://github.com/Kyubyong/tacotron)
+
 
