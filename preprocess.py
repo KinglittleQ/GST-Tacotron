@@ -18,7 +18,7 @@ def preprocess(base_dir):
         for file in os.listdir(d):
             path = join(d, file)
             base, ext = os.path.splitext(path)
-            if ext == '.wav':
+            if ext == '.wav' and base[-7:] != '_cutoff':
                 output_path = base + '_cutoff' + ext
                 cutoff(path, output_path)
                 print(output_path)
