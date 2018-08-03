@@ -60,5 +60,5 @@ python3 train.py 0 all 0
 
 run`generate.py`, modify the `text`in `generate.py before running` 
 
-> only suppose Chinese
+> only support Chinese
 
