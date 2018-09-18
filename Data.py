@@ -19,8 +19,9 @@ class SpeechDataset(Dataset):
     def __init__(self, r=slice(0, None)):
         print('Start loading data')
         # fpaths, texts = get_data(hp.data, r)  # thchs30
-        fpaths, texts = get_keda_data(hp.data, r)  # keda api
+        # fpaths, texts = get_keda_data(hp.data, r)  # keda api
         # fpaths, texts = get_thchs30_data(hp.data, r)
+        fpaths, texts = get_blizzard_data(hp.data, r)
         print('Finish loading data')
         self.fpaths = fpaths
         self.texts = texts
@@ -183,6 +184,26 @@ def get_LJ_data(data_dir, r):
             items = line.strip().split('|')
             wav_paths.append(os.path.join(data_dir, items[0] + '.wav'))
             text = items[1]
+            text = text_normalize(text) + 'E'
+            text = [hp.char2idx[c] for c in text]
+            text = torch.Tensor(text).type(torch.LongTensor)
+            texts.append(text)
+
+    for wav in wav_paths[-20:]:
+        print(wav)
+
+    return wav_paths[r], texts[r]
+
+def get_blizzard_data(data_dir, r):
+    file_list = './filelists/bliz13_audio_text_train_filelist.txt'
+
+    texts = []
+    wav_paths = []
+    with open(file_list, 'r') as f:
+        for line in f.readlines():
+            wav_path, text = line.strip().split('|')
+            wav_paths.append(os.path.join(data_dir, wav_path))
+
             text = text_normalize(text) + 'E'
             text = [hp.char2idx[c] for c in text]
             text = torch.Tensor(text).type(torch.LongTensor)
