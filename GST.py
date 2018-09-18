@@ -57,6 +57,7 @@ class ReferenceEncoder(nn.Module):
         N = out.size(0)
         out = out.contiguous().view(N, T, -1)  # [N, Ty//2^K, 128*n_mels//2^K]
 
+        self.gru.flatten_parameters()
         memory, out = self.gru(out)  # out --- [1, N, E//2]
 
         return out.squeeze(0)

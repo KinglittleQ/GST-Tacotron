@@ -13,8 +13,8 @@ class Hyperparameters():
     # device = 'cpu'
 
     lr = 0.001
-    batch_size = 4   # !!!
-    num_epochs = 10000  # !!!
+    batch_size = 16   # !!!
+    num_epochs = 100  # !!!
     eval_size = 1
     save_per_epoch = 1
     log_per_batch = 20
@@ -25,8 +25,8 @@ class Hyperparameters():
 
     # eval_text = '''er2 dui4 lou2 shi4 cheng2 jiao1 yi4 zhi4 zuo4 yong4 zui4 da4 de5 xian4 gou4'''
     #eval_text = '''chua1n pu3 zo3ng to3ng shuo1 ta1 ce2ng ji1ng xia4ng me3i guo2 re2n mi2n che2ng nuo4 jia1ng yo3u yi1 ge4 me3i ha3o de she4ng da4n li3 wu4  sui2 zhe zhe4 yi1 jia3n shui4 fa3 a4n to1ng guo4  ta1 ye3 dui4 xia4n le zhe4 yi1 che2ng nuo4'''
-    eval_text = '''Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition'''
-    ref_wav = 'ref'
+    eval_text = 'it took me a long time to develop a brain . now that i have it i\'m not going to be silent !'
+    ref_wav = '/d/blizzard/lessac_cathy5/wavn/PP_309_093.wav'
 
     lr_step = [500000, 1000000, 2000000]
 
@@ -60,7 +60,7 @@ class Hyperparameters():
 
     # sr = 22050  # Sample rate.
     sr = 16000  # keda, thchs30, aishell
-    n_fft = 2048  # fft points (samples)
+    n_fft = 1024  # fft points (samples) - ALE changed this from 2048
     frame_shift = 0.0125  # seconds
     frame_length = 0.05  # seconds
     hop_length = int(sr * frame_shift)  # samples.
