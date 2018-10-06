@@ -23,7 +23,7 @@ pip3 install -r requirements.txt
 
 ## How to train
 
-- Download dataset --- LJSpeech or thchs30
+- Download dataset --- write your `get_XX_data()` function in `Data.py`
 - Adjust hyperparameters  in Hyperparameters.py
 - make a directory named `log` in the parent of parent directory of Tacotron code
 
