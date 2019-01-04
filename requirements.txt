@@ -46,5 +46,5 @@ tqdm==4.23.2
 ujson==1.35
 unicode==2.6
 Unidecode==1.0.22
-urllib3==1.22
+urllib3>=1.23
 wrapt==1.10.11
