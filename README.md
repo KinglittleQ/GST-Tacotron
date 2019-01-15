@@ -57,7 +57,7 @@ python3 train.py 0 all 0
 
 ## How to generate wav
 
-run`generate.py`, modify the `text`in `generate.py before running` 
+run`generate.py`, modify the `text`in `generate.py` before running
 
 > only support Chinese
 
