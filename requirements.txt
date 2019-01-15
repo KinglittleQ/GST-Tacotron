@@ -29,7 +29,7 @@ pyparsing==2.2.0
 pypinyin==0.30.1
 python-dateutil==2.7.2
 pytz==2018.4
-PyYAML==3.12
+pyyaml>=4.2b1
 regex==2017.4.5
 requests>=2.20.0
 requests-toolbelt==0.8.0
