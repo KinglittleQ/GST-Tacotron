@@ -1,7 +1,6 @@
-# Tacotron-Pytorch
-An efficient PyTorch implementation of Tacotron.
+# GST-Tacotron-Pytorch
 
-Paper: [Tacotron: A Fully End-to-End Text-To-Speech Synthesis Model](https://arxiv.org/abs/1703.10135)
+A  PyTorch implementation of  [Style Tokens: Unsupervised Style Modeling, Control and Transfer in End-to-End Speech Synthesis](https://arxiv.org/abs/1803.09017)
 
 ![model](pic/model.png)
 
@@ -22,9 +21,9 @@ pip3 install -r requirements.txt
 - `Synthesis.py` --- generate wav file
 
 ## How to train
-
-- Download dataset --- write your `get_XX_data()` function in `Data.py`
-- Adjust hyperparameters  in Hyperparameters.py
+- Download multispeaker dataset
+- preprocess your data and write yout `get_XX_data` function in `Data.py`
+- Adjust hyperparameters  in `Hyperparameters.py`
 - make a directory named `log` in the parent of parent directory of Tacotron code
 
 ```
