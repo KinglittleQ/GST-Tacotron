@@ -145,6 +145,7 @@ class AttentionRNN(nn.Module):
         T_y = inputs.size(1)
 
         # inputs = torch.cat([inputs[:, 0, :].unsqueeze(1), inputs[:, :-1, :]], 1)
+        self.gru.flatten_parameters()
         outputs, hidden = self.gru(inputs, prev_hidden)  # outputs: [N, T_y, E]  hidden: [1, N, E]
         w = self.W(outputs).unsqueeze(2).expand(-1, -1, T_x, -1)  # [N, T_y, T_x, E]
         u = self.U(memory).unsqueeze(1).expand(-1, T_y, -1, -1)  # [N, T_y, T_x, E]

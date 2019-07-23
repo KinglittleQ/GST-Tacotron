@@ -88,6 +88,7 @@ class Encoder(nn.Module):
 
         # outputs = torch.transpose(outputs, 0, 1)  # [T, N, E//2]
 
+        self.gru.flatten_parameters()
         outputs, hidden = self.gru(outputs, prev_hidden)  # outputs [N, T, E]
 
         return outputs, hidden
@@ -126,9 +127,11 @@ class Decoder(nn.Module):
             attn_project = self.attn_projection(torch.cat([attn_apply, outputs], dim=2))  # [N, T_y/r, E]
 
             # GRU1
+            self.gru1.flatten_parameters()
             outputs1, gru1_hidden = self.gru1(attn_project)  # outputs1--[N, T_y/r, E]  gru1_hidden--[1, N, E]
             gru_outputs1 = outputs1 + attn_project  # [N, T_y/r, E]
             # GRU2
+            self.gru2.flatten_parameters()
             outputs2, gru2_hidden = self.gru2(gru_outputs1)  # outputs2--[N, T_y/r, E]  gru2_hidden--[1, N, E]
             gru_outputs2 = outputs2 + gru_outputs1
 
@@ -160,9 +163,11 @@ class Decoder(nn.Module):
                 attn_project = self.attn_projection(torch.cat([attn_apply, outputs], dim=-1))  # [1, 1, E]
 
                 # GRU1
+                self.gru1.flatten_parameters()
                 outputs1, gru1_hidden = self.gru1(attn_project, gru1_hidden)  # outputs1--[1, 1, E]  gru1_hidden--[1, 1, E]
                 outputs1 = outputs1 + attn_project  # [1, T_y/r, E]
                 # GRU2
+                self.gru2.flatten_parameters()
                 outputs2, gru2_hidden = self.gru2(outputs1, gru2_hidden)  # outputs2--[1, T_y/r, E]  gru2_hidden--[1, 1, E]
                 outputs2 = outputs2 + outputs1
 
@@ -226,6 +231,7 @@ class DecoderCBHG(nn.Module):
             outputs = layer(outputs)  # [N, T, n_mels]
 
         # bidirection gru
+        self.gru.flatten_parameters()
         outputs, hidden = self.gru(outputs, prev_hidden)  # outputs: [N, T, E]
 
         return outputs, hidden
