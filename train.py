@@ -8,6 +8,7 @@ from utils import spectrogram2wav
 import torch
 import torch.optim as optim
 from torch.utils.data import DataLoader
+from torch.nn import DataParallel
 
 from scipy.io.wavfile import write
 from time import time
@@ -42,7 +43,9 @@ def train(log_dir, dataset_size, start_epoch=0):
     f.write(msg + '\n')
 
     # load model
-    model = Tacotron().to(device)
+    model = Tacotron().cuda()#.to(device)
+    if torch.cuda.device_count() > 1:
+        model = DataParallel(model)
     if start_epoch != 0:
         model_path = os.path.join(log_dir, 'state', 'epoch{}.pt'.format(start_epoch))
         model.load_state_dict(torch.load(model_path))
@@ -143,27 +146,27 @@ def train(log_dir, dataset_size, start_epoch=0):
 
             model.eval()
 
-            for file in os.listdir(hp.ref_wav):
-                wavfile = os.path.join(hp.ref_wav, file)
-                name, _ = os.path.splitext(file)
+            #for file in os.listdir(hp.ref_wav):
+            wavfile = hp.ref_wav
+            name, _ = os.path.splitext(hp.ref_wav.split('/')[-1])
 
-                text, mel, ref_mels = get_eval_data(hp.eval_text, wavfile)
-                text = text.to(device)
-                mel = mel.to(device)
-                ref_mels = ref_mels.to(device)
+            text, mel, ref_mels = get_eval_data(hp.eval_text, wavfile)
+            text = text.to(device)
+            mel = mel.to(device)
+            ref_mels = ref_mels.to(device)
 
-                mel_hat, mag_hat, attn = model(text, mel, ref_mels)
+            mel_hat, mag_hat, attn = model(text, mel, ref_mels)
 
-                mag_hat = mag_hat.squeeze().detach().cpu().numpy()
-                attn = attn.squeeze().detach().cpu().numpy()
-                plt.imshow(attn.T, cmap='hot', interpolation='nearest')
-                plt.xlabel('Decoder Steps')
-                plt.ylabel('Encoder Steps')
-                fig_path = os.path.join(log_dir, 'attn/epoch{}-{}.png'.format(epoch, name))
-                plt.savefig(fig_path, format='png')
+            mag_hat = mag_hat.squeeze().detach().cpu().numpy()
+            attn = attn.squeeze().detach().cpu().numpy()
+            plt.imshow(attn.T, cmap='hot', interpolation='nearest')
+            plt.xlabel('Decoder Steps')
+            plt.ylabel('Encoder Steps')
+            fig_path = os.path.join(log_dir, 'attn/epoch{}-{}.png'.format(epoch, name))
+            plt.savefig(fig_path, format='png')
 
-                wav = spectrogram2wav(mag_hat)
-                write(os.path.join(log_dir, 'wav/epoch{}-{}.wav'.format(epoch, name)), hp.sr, wav)
+            wav = spectrogram2wav(mag_hat)
+            write(os.path.join(log_dir, 'wav/epoch{}-{}.wav'.format(epoch, name)), hp.sr, wav)
 
             msg = 'synthesis eval wav in epoch{} model'.format(epoch)
             print(msg)
