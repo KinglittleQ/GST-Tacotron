@@ -4,6 +4,9 @@ A  PyTorch implementation of  [Style Tokens: Unsupervised Style Modeling, Contro
 
 ![model](pic/model.png)
 
+## Update
+Add blizzard dataset support.
+
 ## Requirements
 
 ``` shell
