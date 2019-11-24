@@ -25,7 +25,7 @@ pip3 install -r requirements.txt
 
 ## How to train
 - Download multispeaker dataset
-- preprocess your data and write yout `get_XX_data` function in `Data.py`
+- preprocess your data and write your `get_XX_data` function in `Data.py`
 - Adjust hyperparameters  in `Hyperparameters.py`
 - make a directory named `log` in the parent of parent directory of Tacotron code
 
