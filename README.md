@@ -16,18 +16,18 @@ pip3 install -r requirements.txt
 ## File structure
 
 - `Hyperparameters.py` --- contain all hyperparameters
-- `Network.py` --- encoder\decoder
+- `Network.py` --- encoder and decoder
 - `Modules.py` --- some modules for tacotron
-- `Loss.py` --- calculate loss
+- `Loss.py` --- loss function
 - `Data.py` --- load dataset
-- `utils.py` --- some util function for loading and saving data
-- `Synthesis.py` --- generate wav file
+- `utils.py` --- some util functions for data I/O
+- `Synthesis.py` --- generate wav files
 
 ## How to train
-- Download multispeaker dataset
+- Download a multispeaker dataset
 - preprocess your data and write your `get_XX_data` function in `Data.py`
 - Adjust hyperparameters  in `Hyperparameters.py`
-- make a directory named `log` in the parent of parent directory of Tacotron code
+- make a directory named `log` as follow:
 
 ```
 --- log
