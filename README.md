@@ -1,11 +1,11 @@
 # GST-Tacotron-Pytorch
 
-A  PyTorch implementation of  [Style Tokens: Unsupervised Style Modeling, Control and Transfer in End-to-End Speech Synthesis](https://arxiv.org/abs/1803.09017)
+A PyTorch implementation of  [Style Tokens: Unsupervised Style Modeling, Control and Transfer in End-to-End Speech Synthesis](https://arxiv.org/abs/1803.09017)
 
 ![model](pic/model.png)
 
 ## Update
-Add blizzard dataset support.
+Add support for blizzard dataset.
 
 ## Requirements
 
@@ -15,19 +15,19 @@ pip3 install -r requirements.txt
 
 ## File structure
 
-- `Hyperparameters.py` --- contain all hyperparameters
+- `Hyperparameters.py` --- hyperparameters
 - `Network.py` --- encoder and decoder
 - `Modules.py` --- some modules for tacotron
 - `Loss.py` --- loss function
-- `Data.py` --- load dataset
+- `Data.py` --- dataset loader
 - `utils.py` --- some util functions for data I/O
-- `Synthesis.py` --- generate wav files
+- `Synthesis.py` --- speech generation
 
 ## How to train
 - Download a multispeaker dataset
-- preprocess your data and write your `get_XX_data` function in `Data.py`
-- Adjust hyperparameters  in `Hyperparameters.py`
-- make a directory named `log` as follow:
+- Preprocess your data and implement your `get_XX_data` function in `Data.py`
+- Set hyperparameters  in `Hyperparameters.py`
+- Make a directory named `log` as follow:
 
 ```
 --- log
@@ -45,7 +45,7 @@ pip3 install -r requirements.txt
            ......
 ```
 
-- run train.py
+- Run train.py
 
 ``` shell
 python3 train.py [log_number] [dataset_size] [start_epoch]
