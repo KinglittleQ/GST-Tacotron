@@ -60,7 +60,7 @@ python3 train.py 0 all 0
 
 ## How to generate wav
 
-run`generate.py`, modify the `text`in `generate.py` before running
+Run`generate.py`. Replace the `text` in `generate.py` with any chinese sentences as you like before running
 
-> only support Chinese
+> The pretained model provided is trained on Chinese dataset, so it only supports chinese now.
 
