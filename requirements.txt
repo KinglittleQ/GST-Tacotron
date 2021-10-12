@@ -20,7 +20,7 @@ multiprocess==0.70.5
 murmurhash==0.28.0
 numba==0.38.0
 numpy==1.14.3
-opencv-python==3.4.0.12
+opencv-python==4.2.0.32
 pandas==0.22.0
 pathlib==1.0.1
 plac==0.9.6
