@@ -64,3 +64,7 @@ Run`generate.py`. Replace the `text` in `generate.py` with any chinese sentences
 
 > The pretained model provided is trained on Chinese dataset, so it only supports chinese now.
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=KinglittleQ/GST-Tacotron&type=Date)](https://star-history.com/#KinglittleQ/GST-Tacotron&Date)
+
