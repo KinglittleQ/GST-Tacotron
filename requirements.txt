@@ -9,7 +9,7 @@ decorator==4.3.0
 dill==0.2.7.1
 idna==2.6
 inflect==0.3.1
-joblib==0.11
+joblib==1.2.0
 kiwisolver==1.0.1
 librosa==0.6.0
 llvmlite==0.23.0
