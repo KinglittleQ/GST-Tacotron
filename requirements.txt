@@ -1,6 +1,6 @@
 audioread==2.1.5
 bypy==1.6.4
-certifi==2018.4.16
+certifi==2022.12.7
 chardet==3.0.4
 cycler==0.10.0
 cymem==1.31.2
